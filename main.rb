@@ -8,11 +8,12 @@ class Game
   end
 
   def render
-    @character.tick
+    @character.draw
   end
 
   def tick
     render
+    @character.move
   end
 end
 
