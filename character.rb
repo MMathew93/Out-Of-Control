@@ -1,11 +1,11 @@
 class Character
   def initialize(args)
     @args = args
-    @directions = {left: 'a', up: 'w', right: 'd', down: 's'}
     @player_x_position = 200
     @player_y_position = 600
     @player_w = 35
     @player_h = 35
+    @directions = [method(:left), method(:up), method(:right), method(:down)]
   end
 
   def draw
@@ -18,20 +18,33 @@ class Character
 
     # Can I make this a case statement later?
     if k.key_held.left
-      @player_x_position -= 1 unless @player_x_position < 0
+      @directions[0].call
     end
 
     if k.key_held.up
-      @player_y_position += 1 unless @player_y_position > (720 - @player_h)
+      @directions[1].call
     end
 
     if k.key_held.right
-      @player_x_position += 1 unless @player_x_position > (1280 - @player_w)
+      @directions[2].call
     end
 
     if k.key_held.down
-      @player_y_position -= 1 unless @player_y_position < 0
+      @directions[3].call
     end
+  end
+
+  def left
+    @player_x_position -= 1 unless @player_x_position  < 0
+  end
+  def up
+    @player_y_position += 1 unless @player_y_position > (720 - @player_h)
+  end
+  def right
+    @player_x_position  += 1 unless @player_x_position  > (1280 - @player_w)
+  end
+  def down
+    @player_y_position -= 1 unless @player_y_position < 0
   end
 
 end
