@@ -1,10 +1,10 @@
 class Character
   def initialize(args)
     @args = args
-    @player_x_position = 200
-    @player_y_position = 600
-    @player_w = 35
-    @player_h = 35
+    @player_x_position = 100
+    @player_y_position = 510
+    @player_w = 50
+    @player_h = 50
     @directions = [method(:left), method(:up), method(:right), method(:down)]
   end
 
@@ -35,16 +35,16 @@ class Character
   end
 
   def left
-    @player_x_position -= 1 unless @player_x_position  < 0
+    @player_x_position -= 3 unless @player_x_position  < 0
   end
   def up
-    @player_y_position += 1 unless @player_y_position > (720 - @player_h)
+    @player_y_position += 3 unless @player_y_position > (720 - @player_h)
   end
   def right
-    @player_x_position  += 1 unless @player_x_position  > (1280 - @player_w)
+    @player_x_position  += 3 unless @player_x_position  > (1280 - @player_w)
   end
   def down
-    @player_y_position -= 1 unless @player_y_position < 0
+    @player_y_position -= 3 unless @player_y_position < 0
   end
 
 end

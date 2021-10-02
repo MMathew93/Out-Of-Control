@@ -5,9 +5,11 @@ class Game
   def initialize(args)
     @args = args
     @character = Character.new(args)
+    @board = GameBoard.new(args)
   end
 
   def render
+    @board.draw
     @character.draw
   end
 
