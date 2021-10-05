@@ -14,14 +14,15 @@ class Character
     @directions = [method(:left), method(:up), method(:right), method(:down)]
   end
 
+  # function that dipslays/draws the player character
   def draw
     @args.outputs.solids << [@player_x_position, @player_y_position, @player_w, @player_h, 255, 0, 0, 255]
   end
 
+  # function that allows player to move
   def move
     k = @args.inputs.keyboard
     c = @args.inputs.controller_one
-
     # Can I make this a case statement later?
     @directions[0].call if k.key_held.left
 
@@ -32,6 +33,7 @@ class Character
     @directions[3].call if k.key_held.down
   end
 
+  # functions to set new x and y positions based on key press, keeps player within play area
   def left
     @player_x_position -= 2 unless @player_x_position < 70
   end
@@ -46,5 +48,10 @@ class Character
 
   def down
     @player_y_position -= 2 unless @player_y_position < 70
+  end
+
+  # function that shuffles the players moves for the theme of game
+  def shuffle_directions
+    @directions = @directions.shuffle
   end
 end

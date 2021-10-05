@@ -14,31 +14,42 @@ class GameBoard
     @exit_h = 50
   end
 
+  # function that pulls everything together
   def draw
-    render_background
-    render_timer
+    render_play_area
     render_exit
+    render_timer
   end
 
+  # function that draws the "border" and player's interactive area
   def render_play_area
     @args.outputs.solids << [50, 50, 1180, 550, 0, 0, 0]
     @args.outputs.solids << [70, 70, 1140, 510, 255, 255, 255]
   end
 
+  # function that creates the exit sprite and it's location
+  def render_exit
+    @args.outputs.solids << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 0, 0, 255, 255]
+  end
+
+  # function that creates the timer and countsdown
   def render_timer
     @args.outputs.labels << [640, 700, @time.to_sf, 25, 1, 0, 0, 0]
     count_down
   end
 
+  # function that counts the timer down
   def count_down
     @time -= (1 / 60) unless @time <= 0
   end
 
-  def render_background
-    render_play_area
+  # function for the pause screen between levels to explain new rules to player
+  def splash_screen
+    #pause game with instructions
   end
 
-  def render_exit
-    @args.outputs.solids << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 0, 0, 255, 255]
+  def game_over?
+    @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0]
+    @args.outputs.labels << [640, 469, 'GAME OVER', 100, 1, 255, 255, 255] 
   end
 end

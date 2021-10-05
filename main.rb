@@ -9,10 +9,7 @@ class Game
     @args = args
     @character = Character.new(args)
     @board = GameBoard.new(args)
-    @exit_rect = {
-      x: @board.exit_x_position, y: @board.exit_y_position,
-      w: @board.exit_w, h: @board.exit_h
-    }
+    @level = 1
   end
 
   def render
@@ -21,17 +18,39 @@ class Game
   end
 
   def game_state
-    @args.outputs.labels << [640, 400, 'Next Level', 100, 1, 0, 255, 0] if @player_rect.intersect_rect?(@exit_rect)
-    @args.outputs.labels << [640, 400, 'GAME OVER', 100, 1, 0, 255, 0] if @board.time <= 0
+    @player_rect = {
+      x: @character.player_x_position, y: @character.player_y_position,
+      w: @character.player_w, h: @character.player_h
+    }
+    @exit_rect = {
+      x: @board.exit_x_position, y: @board.exit_y_position,
+      w: @board.exit_w, h: @board.exit_h
+    }
+    next_level if @player_rect.intersect_rect?(@exit_rect)
+    @board.game_over? if @board.time <= 0
+  end
+
+  def next_level
+    @level += 1
+    @board.time = 20
+    @character.shuffle_directions
+    if @level.even?
+      @board.exit_x_position = 100
+      @board.exit_y_position = 510
+      @character.player_x_position = 1140
+      @character.player_y_position = 90
+    else
+      @board.exit_x_position = 1140
+      @board.exit_y_position = 90
+      @character.player_x_position = 100
+      @character.player_y_position = 510
+    end
+    # @board.splash_screen
   end
 
   def tick
     render
     @character.move
-    @player_rect = {
-      x: @character.player_x_position, y: @character.player_y_position,
-      w: @character.player_w, h: @character.player_h
-    }
     game_state
   end
 end
