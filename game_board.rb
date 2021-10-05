@@ -3,6 +3,8 @@
 # Main gameboard class, controls the play area, timer, and exit
 
 class GameBoard
+  attr_accessor :time, :exit_x_position, :exit_y_position, :exit_w, :exit_h
+
   def initialize(args)
     @args = args
     @time = 20
@@ -39,5 +41,4 @@ class GameBoard
   def render_exit
     @args.outputs.solids << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 0, 0, 255, 255]
   end
-
 end

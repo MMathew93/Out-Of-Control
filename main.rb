@@ -9,6 +9,14 @@ class Game
     @args = args
     @character = Character.new(args)
     @board = GameBoard.new(args)
+    @player_rect = {
+                    x: @character.player_x_position, y: @character.player_y_position, 
+                    w: @character.player_w, h: @character.player_h
+                  }
+    @exit_rect = {
+                  x: @board.exit_x_position, y: @board.exit_y_position, 
+                  w: @board.exit_w, h: @board.exit_h
+                }
   end
 
   def render
@@ -16,21 +24,15 @@ class Game
     @character.draw
   end
 
-  def game_over
-    if @board.instance_variable_get(:@time) <= 0
-      @args.outputs.labels << [640, 400, 'GAME OVER', 100, 1, 0, 255, 0]
-    elsif (@character.instance_variable_get(:@player_x_position) == @board.instance_variable_get(:@exit_x_position)) || (@character.instance_variable_get(:@player_y_position) === @board.instance_variable_get(:@exit_y_position))
-      @args.outputs.labels << [640, 400, 'GAME OVER', 100, 1, 0, 255, 0]
-    else
-      # next level/restart methods
-      @args.outputs.labels << [640, 400, 'YOU DID IT', 100, 1, 0, 255, 0]
-    end
+  def game_state
+    @args.outputs.labels << [640, 400, 'Next Level', 100, 1, 0, 255, 0] if @player_rect.intersect_rect? @exit_rect
+    @args.outputs.labels << [640, 400, 'GAME OVER', 100, 1, 0, 255, 0] if @board.time <= 0
   end
 
   def tick
     render
     @character.move
-    game_over
+    game_state
   end
 end
 

@@ -3,6 +3,8 @@
 # Player controls and interaction class
 
 class Character
+  attr_accessor :player_x_position, :player_y_position, :player_w, :player_h
+
   def initialize(args)
     @args = args
     @player_x_position = 100
