@@ -34,7 +34,7 @@ class GameBoard
 
   # function that creates the timer and countsdown
   def render_timer
-    @args.outputs.labels << [640, 700, @time.to_sf, 25, 1, 0, 0, 0]
+    @args.outputs.labels << [640, 700, (@time * 1).to_sf, 25, 1, 0, 0, 0]
     count_down
   end
 
@@ -44,12 +44,28 @@ class GameBoard
   end
 
   # function for the pause screen between levels to explain new rules to player
-  def splash_screen
-    #pause game with instructions
+  def splash_screen(level)
+    if level == 2
+      @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0, 125]
+      @args.outputs.solids << [70, 70, 1140, 510, 0, 0, 0, 200]
+      @args.outputs.labels << [640, 459, "Oh snap, the controls are out of control!", 15, 1, 255, 255, 255]
+      @args.outputs.labels << [640, 399, "Let's up the difficulty shall we?", 15, 1, 255, 255, 255]
+    elsif level == 3
+      @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0, 125]
+      @args.outputs.solids << [70, 70, 1140, 510, 0, 0, 0, 200]
+      @args.outputs.labels << [640, 459, "Oooo you think your hot stuff huh?", 15, 1, 255, 255, 255]
+      @args.outputs.labels << [640, 399, "Why not try the ULTIMATE CHALLENGE NEXT! >:]", 15, 1, 255, 255, 255]
+    end
+  end
+
+  def draw_walls
+
   end
 
   def game_over?
-    @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0]
+    @time = 0
+    @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0, 125]
     @args.outputs.labels << [640, 469, 'GAME OVER', 100, 1, 255, 255, 255] 
+    @args.outputs.labels << [640, 250, 'Hit Spacebar to Restart and Try again!', 10, 1, 255, 255, 255] 
   end
 end

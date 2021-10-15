@@ -20,9 +20,9 @@ class Character
   end
 
   # function that allows player to move
-  def move
+  def move(game_is_over)
+    return if game_is_over
     k = @args.inputs.keyboard
-    c = @args.inputs.controller_one
     # Can I make this a case statement later?
     @directions[0].call if k.key_held.left
 
