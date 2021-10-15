@@ -35,19 +35,19 @@ class Character
 
   # functions to set new x and y positions based on key press, keeps player within play area
   def left
-    @player_x_position -= 2 unless @player_x_position < 70
+    @player_x_position -= 4 unless @player_x_position < 70
   end
 
   def up
-    @player_y_position += 2 unless @player_y_position > 530
+    @player_y_position += 4 unless @player_y_position > 530
   end
 
   def right
-    @player_x_position += 2 unless @player_x_position > 1160
+    @player_x_position += 4 unless @player_x_position > 1160
   end
 
   def down
-    @player_y_position -= 2 unless @player_y_position < 70
+    @player_y_position -= 4 unless @player_y_position < 70
   end
 
   # function that shuffles the players moves for the theme of game

@@ -3,7 +3,7 @@
 # Main gameboard class, controls the play area, timer, and exit
 
 class GameBoard
-  attr_accessor :time, :exit_x_position, :exit_y_position, :exit_w, :exit_h
+  attr_accessor :time, :exit_x_position, :exit_y_position, :exit_w, :exit_h, :walls
 
   def initialize(args)
     @args = args
@@ -12,19 +12,47 @@ class GameBoard
     @exit_y_position = 90
     @exit_w = 50
     @exit_h = 50
+    @walls = []
   end
 
   # function that pulls everything together
-  def draw
-    render_play_area
+  def draw(level)
+    render_play_area(level)
     render_exit
     render_timer
   end
 
   # function that draws the "border" and player's interactive area
-  def render_play_area
+  def render_play_area(level)
     @args.outputs.solids << [50, 50, 1180, 550, 0, 0, 0]
     @args.outputs.solids << [70, 70, 1140, 510, 255, 255, 255]
+    if level == 2
+      @walls << draw_walls(180, 360, 15, 220)
+      @walls << draw_walls(640, 360, 15, 220)
+      @walls << draw_walls(550, 170, 15, 300)
+      @walls << draw_walls(640, 60, 15, 220)
+      @walls << draw_walls(730, 170, 15, 300)
+      @walls << draw_walls(1100, 50, 15, 220)
+    end
+    if level == 3
+      @walls = []
+      @walls << draw_walls(180, 150, 15, 430)
+      @walls << draw_walls(290, 70, 15, 430)
+
+      @walls << draw_walls(430, 60, 15, 220)
+      @walls << draw_walls(430, 370, 15, 220)
+
+      @walls << draw_walls(640, 360, 15, 220)
+      @walls << draw_walls(550, 170, 15, 300)
+      @walls << draw_walls(640, 60, 15, 220)
+      @walls << draw_walls(730, 170, 15, 300)
+
+      @walls << draw_walls(860, 60, 15, 220)
+      @walls << draw_walls(860, 370, 15, 220)
+
+      @walls << draw_walls(990, 150, 15, 430)
+      @walls << draw_walls(1100, 50, 15, 430)
+    end
   end
 
   # function that creates the exit sprite and it's location
@@ -58,8 +86,8 @@ class GameBoard
     end
   end
 
-  def draw_walls
-
+  def draw_walls(x, y, width, height)
+    @args.outputs.solids << [x, y, width, height, 0, 0, 0]
   end
 
   def game_over?

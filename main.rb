@@ -9,7 +9,7 @@ class Game
     @args = args
     @character = Character.new(args)
     @board = GameBoard.new(args)
-    @level = 1
+    @level = 3
     @game_scene = :menu
     @gameover = false
     @flag = false
@@ -22,8 +22,9 @@ class Game
 
   def render_game
     return unless @game_scene == :game
-    @board.draw
+    @board.draw(@level)
     @character.draw
+    @character.define_walls(@board.walls)
     @character.move(@gameover)
     game_state
   end
