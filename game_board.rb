@@ -10,8 +10,8 @@ class GameBoard
     @time = 20
     @exit_x_position = 1140
     @exit_y_position = 90
-    @exit_w = 50
-    @exit_h = 50
+    @exit_w = 70
+    @exit_h = 70
     @walls = []
   end
 
@@ -26,6 +26,7 @@ class GameBoard
   def render_play_area(level)
     @args.outputs.solids << [50, 50, 1180, 550, 0, 0, 0]
     @args.outputs.solids << [70, 70, 1140, 510, 255, 255, 255]
+    #@args.outputs.primitives << [70, 70, 1140, 510, 'assets/bg.png'].sprite
     if level == 2
       @walls << draw_walls(180, 360, 15, 220)
       @walls << draw_walls(640, 360, 15, 220)
@@ -57,7 +58,7 @@ class GameBoard
 
   # function that creates the exit sprite and it's location
   def render_exit
-    @args.outputs.solids << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 0, 0, 255, 255]
+    @args.outputs.sprites << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 'assets/spiral.png']
   end
 
   # function that creates the timer and countsdown

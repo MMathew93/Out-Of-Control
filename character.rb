@@ -10,13 +10,13 @@ class Character
     @player_x_position = 100
     @player_y_position = 510
     @player_w = 50
-    @player_h = 50
+    @player_h = 65
     @directions = [method(:left), method(:up), method(:right), method(:down)]
   end
 
   # function that dipslays/draws the player character
   def draw
-    @args.outputs.solids << [@player_x_position, @player_y_position, @player_w, @player_h, 255, 0, 0, 255]
+    @args.outputs.sprites << [@player_x_position, @player_y_position, @player_w, @player_h, 'assets/astro-1.png']
   end
 
   # function that allows player to move
