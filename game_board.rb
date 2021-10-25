@@ -24,8 +24,8 @@ class GameBoard
 
   # function that draws the "border" and player's interactive area
   def render_play_area(level)
-    @args.outputs.solids << [50, 50, 1180, 550, 0, 0, 0]
-    @args.outputs.solids << [70, 70, 1140, 510, 255, 255, 255]
+    @walls << draw_walls(50, 50, 1180, 550)
+    @walls << draw_walls(70, 70, 1140, 510, [255, 255, 255])
     #@args.outputs.primitives << [70, 70, 1140, 510, 'assets/bg.png'].sprite
     if level == 2
       @walls << draw_walls(180, 360, 15, 220)
@@ -36,7 +36,7 @@ class GameBoard
       @walls << draw_walls(1100, 50, 15, 220)
     end
     if level == 3
-      @walls = []
+      # @walls = []
       @walls << draw_walls(180, 150, 15, 430)
       @walls << draw_walls(290, 70, 15, 430)
 
@@ -87,8 +87,8 @@ class GameBoard
     end
   end
 
-  def draw_walls(x, y, width, height)
-    @args.outputs.solids << [x, y, width, height, 0, 0, 0]
+  def draw_walls(x, y, width, height, color=[0,0,0])
+    @args.outputs.solids << [x, y, width, height, *color]
   end
 
   def game_over?

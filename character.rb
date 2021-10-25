@@ -33,25 +33,60 @@ class Character
     @directions[3].call if k.key_held.down
   end
 
+  def receive_variables(player_rect, walls)
+    @player_rect = player_rect
+    @walls = walls
+  end
+
   # functions to set new x and y positions based on key press, keeps player within play area
   def left
-    @player_x_position -= 4 unless @player_x_position < 70
+    colliding = false
+    @walls.each do |wall|
+      if @player_rect.intersect_rect?(wall)
+        colliding = true
+        break
+      end
+    end
+    @player_x_position -= 4 unless colliding
   end
 
   def up
-    @player_y_position += 4 unless @player_y_position > 530
+    colliding = false
+    @walls.each do |wall|
+      if @player_rect.intersect_rect?(wall)
+        colliding = true
+        break
+      end
+    end
+    @player_y_position += 4 unless colliding
   end
 
   def right
-    @player_x_position += 4 unless @player_x_position > 1160
+    colliding = false
+    @walls.each do |wall|
+      if @player_rect.intersect_rect?(wall)
+        colliding = true
+        break
+      end
+    end
+    @player_x_position += 4 unless colliding
+    puts @walls
   end
 
   def down
-    @player_y_position -= 4 unless @player_y_position < 70
+    colliding = false
+    @walls.each do |wall|
+      if @player_rect.intersect_rect?(wall)
+        colliding = true
+        break
+      end
+    end
+    @player_y_position -= 4 unless colliding
   end
 
   # function that shuffles the players moves for the theme of game
   def shuffle_directions
     @directions = @directions.shuffle
   end
+
 end
