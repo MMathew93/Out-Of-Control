@@ -38,7 +38,7 @@ class Game
     @args.outputs.labels << [500, 270, "[Esc] Pause ", 4, 0, 255, 255, 255]
 
     @args.outputs.labels << [10, 100, "Code:   @MMathew93", 255, 255, 255]
-    @args.outputs.labels << [10,  80, "Art:    @mobypixel", 255, 255, 255]
+    @args.outputs.labels << [10,  80, "Art:    etrujii.tumblr.com", 255, 255, 255]
     @args.outputs.labels << [10,  60, "Music:  TBD", 255, 255, 255]
     @args.outputs.labels << [10,  40, "Engine: DragonRuby GTK", 255, 255, 255]
   end
@@ -53,7 +53,7 @@ class Game
       x: @board.exit_x_position, y: @board.exit_y_position,
       w: @board.exit_w, h: @board.exit_h
     }
-    @character.receive_variables(@player_rect, @board.walls)
+    @character.receive_player_position(@player_rect)
     next_level if @player_rect.intersect_rect?(@exit_rect)
     if @board.time <= 0
       @gameover = true
@@ -67,8 +67,11 @@ class Game
   def next_level
     @level += 1
     @board.time = 20
-    @character.shuffle_directions
+    # @character.shuffle_directions
     @flag = true
+    #feed walls to player class
+    @board.walls = []
+    @character.receive_walls(@board.walls)
 
     if @level.even?
       @board.exit_x_position = 100

@@ -24,35 +24,66 @@ class GameBoard
 
   # function that draws the "border" and player's interactive area
   def render_play_area(level)
-    @walls << draw_walls(50, 50, 1180, 550)
-    @walls << draw_walls(70, 70, 1140, 510, [255, 255, 255])
+    #return
+    draw_walls(50, 50, 1180, 550)
+    draw_walls(70, 70, 1140, 510, [255, 255, 255])
     #@args.outputs.primitives << [70, 70, 1140, 510, 'assets/bg.png'].sprite
     if level == 2
-      @walls << draw_walls(180, 360, 15, 220)
-      @walls << draw_walls(640, 360, 15, 220)
-      @walls << draw_walls(550, 170, 15, 300)
-      @walls << draw_walls(640, 60, 15, 220)
-      @walls << draw_walls(730, 170, 15, 300)
-      @walls << draw_walls(1100, 50, 15, 220)
+      draw_walls(180, 360, 15, 220, [])
+      draw_walls(640, 400, 15, 200, [])
+      draw_walls(535, 170, 15, 300, [])
+      draw_walls(640, 50, 15, 200, [])
+      draw_walls(745, 170, 15, 300, [])
+      draw_walls(1100, 50, 15, 220, [])
+      save_walls(level) if @walls.empty?
     end
     if level == 3
-      # @walls = []
-      @walls << draw_walls(180, 150, 15, 430)
-      @walls << draw_walls(290, 70, 15, 430)
+      draw_walls(180, 150, 15, 430, [255,0,0])
+      draw_walls(290, 70, 15, 430, [])
 
-      @walls << draw_walls(430, 60, 15, 220)
-      @walls << draw_walls(430, 370, 15, 220)
+      draw_walls(430, 60, 15, 220, [])
+      draw_walls(430, 370, 15, 220, [])
 
-      @walls << draw_walls(640, 360, 15, 220)
-      @walls << draw_walls(550, 170, 15, 300)
-      @walls << draw_walls(640, 60, 15, 220)
-      @walls << draw_walls(730, 170, 15, 300)
+      draw_walls(640, 360, 15, 220, [])
+      draw_walls(550, 170, 15, 300, [])
+      draw_walls(640, 60, 15, 220, [])
+      draw_walls(730, 170, 15, 300, [])
 
-      @walls << draw_walls(860, 60, 15, 220)
-      @walls << draw_walls(860, 370, 15, 220)
+      draw_walls(860, 60, 15, 220, [])
+      draw_walls(860, 370, 15, 220, [])
 
-      @walls << draw_walls(990, 150, 15, 430)
-      @walls << draw_walls(1100, 50, 15, 430)
+      draw_walls(990, 150, 15, 430, [])
+      draw_walls(1100, 50, 15, 430, [])
+      save_walls(level) if @walls.empty?
+    end
+  end
+
+  def save_walls(level)
+    if level == 2
+      @walls << [180, 360, 16, 220]
+      @walls << [640, 400, 16, 200]
+      @walls << [535, 170, 16, 300]
+      @walls << [640, 50, 16, 200]
+      @walls << [745, 170, 16, 300]
+      @walls << [1100, 50, 16, 220]
+    end
+    if level == 3
+      @walls << [180, 150, 16, 430]
+      @walls << [290, 70, 16, 430]
+
+      @walls << [430, 60, 16, 220]
+      @walls << [430, 370, 16, 220]
+
+      @walls << [640, 360, 16, 220]
+      @walls << [550, 170, 16, 300]
+      @walls << [640, 60, 16, 220]
+      @walls << [730, 170, 16, 300]
+
+      @walls << [860, 60, 16, 220]
+      @walls << [860, 370, 16, 220]
+
+      @walls << [990, 150, 16, 430]
+      @walls << [1100, 50, 16, 430]
     end
   end
 
