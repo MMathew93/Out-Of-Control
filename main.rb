@@ -35,11 +35,12 @@ class Game
     @args.outputs.labels << [640, 600, "Out of Control", 50, 1, 255, 255, 255]
     @args.outputs.labels << [640, 400, "Instructions: Get to the exit!", 4, 1, 255, 255, 255]
     @args.outputs.labels << [500, 240, "[Enter] Start/Resume ", 4, 0, 255, 255, 255]
-    @args.outputs.labels << [500, 270, "[Esc] Pause ", 4, 0, 255, 255, 255]
+    @args.outputs.labels << [500, 270, "[R] Restart ", 4, 0, 255, 255, 255]
+    @args.outputs.labels << [500, 300, "[Esc] Pause ", 4, 0, 255, 255, 255]
 
     @args.outputs.labels << [10, 100, "Code:   @MMathew93", 255, 255, 255]
     @args.outputs.labels << [10,  80, "Art:    etrujii.tumblr.com", 255, 255, 255]
-    @args.outputs.labels << [10,  60, "Music:  TBD", 255, 255, 255]
+    @args.outputs.labels << [10,  60, "Music:  'Crash Landing' DOS-88", 255, 255, 255]
     @args.outputs.labels << [10,  40, "Engine: DragonRuby GTK", 255, 255, 255]
   end
 
@@ -67,23 +68,24 @@ class Game
   def next_level
     @level += 1
     @board.time = 20
-    # @character.shuffle_directions
+    @character.shuffle_directions
     @flag = true
-    #feed walls to player class
-    @board.walls = []
-    @character.receive_walls(@board.walls)
-
+    
     if @level.even?
-      @board.exit_x_position = 100
+      @board.exit_x_position = 85
       @board.exit_y_position = 510
       @character.player_x_position = 1140
       @character.player_y_position = 90
     else
-      @board.exit_x_position = 1140
-      @board.exit_y_position = 90
+      @board.exit_x_position = 1135
+      @board.exit_y_position = 75
       @character.player_x_position = 100
       @character.player_y_position = 510
     end
+    #feed walls to player class
+    @board.walls = []
+    @character.receive_walls(@board.walls)
+
     @board.splash_screen(@level)
   end
 
@@ -101,6 +103,10 @@ class Game
     end
 
     if @gameover && k.key_down.space
+      $gtk.reset
+    end
+
+    if k.key_down.r
       $gtk.reset
     end
   end
@@ -126,6 +132,9 @@ class Game
 end
 
 def tick(args)
+  if args.state.tick_count == 0
+    args.outputs.sounds << 'assets/CrashLanding.ogg'
+  end
   args.state.game ||= Game.new(args)
   args.state.game.tick
 end

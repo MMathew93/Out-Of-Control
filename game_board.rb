@@ -24,10 +24,9 @@ class GameBoard
 
   # function that draws the "border" and player's interactive area
   def render_play_area(level)
-    #return
     draw_walls(50, 50, 1180, 550)
-    draw_walls(70, 70, 1140, 510, [255, 255, 255])
-    #@args.outputs.primitives << [70, 70, 1140, 510, 'assets/bg.png'].sprite
+    @args.outputs.primitives << {x: 70, y: 70, w: 1140, h: 510, path: 'assets/bg.png'}.sprite!
+    
     if level == 2
       draw_walls(180, 360, 15, 220, [])
       draw_walls(640, 400, 15, 200, [])
@@ -38,7 +37,7 @@ class GameBoard
       save_walls(level) if @walls.empty?
     end
     if level == 3
-      draw_walls(180, 150, 15, 430, [255,0,0])
+      draw_walls(180, 150, 15, 430, [])
       draw_walls(290, 70, 15, 430, [])
 
       draw_walls(430, 60, 15, 220, [])
@@ -60,36 +59,36 @@ class GameBoard
 
   def save_walls(level)
     if level == 2
-      @walls << [180, 360, 16, 220]
-      @walls << [640, 400, 16, 200]
-      @walls << [535, 170, 16, 300]
-      @walls << [640, 50, 16, 200]
-      @walls << [745, 170, 16, 300]
-      @walls << [1100, 50, 16, 220]
+      @walls << wall = {x: 180, y: 360, w: 15, h: 220}
+      @walls << wall = {x: 640, y: 400, w: 15, h: 200}
+      @walls << wall = {x: 535, y: 170, w: 15, h: 300}
+      @walls << wall = {x: 640, y: 50, w: 15, h: 200}
+      @walls << wall = {x: 745, y: 170, w: 15, h: 300}
+      @walls << wall = {x: 1100, y: 50, w: 15, h: 220}
     end
     if level == 3
-      @walls << [180, 150, 16, 430]
-      @walls << [290, 70, 16, 430]
+      @walls << wall = {x: 180, y: 150, w: 15, h: 430}
+      @walls << wall = {x: 290, y: 70, w: 15, h: 430}
 
-      @walls << [430, 60, 16, 220]
-      @walls << [430, 370, 16, 220]
+      @walls << wall = {x: 430, y: 60, w: 15, h: 220}
+      @walls << wall = {x: 430, y: 370, w: 15, h: 220}
 
-      @walls << [640, 360, 16, 220]
-      @walls << [550, 170, 16, 300]
-      @walls << [640, 60, 16, 220]
-      @walls << [730, 170, 16, 300]
+      @walls << wall = {x: 640, y: 360, w: 15, h: 220}
+      @walls << wall = {x: 550, y: 170, w: 15, h: 300}
+      @walls << wall = {x: 640, y: 60, w: 15, h: 220}
+      @walls << wall = {x: 730, y: 170, w: 15, h: 300}
 
-      @walls << [860, 60, 16, 220]
-      @walls << [860, 370, 16, 220]
+      @walls << wall = {x: 860, y: 60, w: 15, h: 220}
+      @walls << wall = {x: 860, y: 370, w: 15, h: 220}
 
-      @walls << [990, 150, 16, 430]
-      @walls << [1100, 50, 16, 430]
+      @walls << wall = {x: 990, y: 150, w: 15, h: 430}
+      @walls << wall = {x: 1100, y: 50, w: 15, h: 430}
     end
   end
 
   # function that creates the exit sprite and it's location
   def render_exit
-    @args.outputs.sprites << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 'assets/spiral.png']
+    @args.outputs.primitives << [@exit_x_position, @exit_y_position, @exit_w, @exit_h, 'assets/spiral.png', @args.state.tick_count % 360].sprite
   end
 
   # function that creates the timer and countsdown
@@ -106,12 +105,12 @@ class GameBoard
   # function for the pause screen between levels to explain new rules to player
   def splash_screen(level)
     if level == 2
-      @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0, 125]
+      @args.outputs.primitives << [0, 0, 1280, 720, 0, 0, 0, 125].solid
       @args.outputs.solids << [70, 70, 1140, 510, 0, 0, 0, 200]
       @args.outputs.labels << [640, 459, "Oh snap, the controls are out of control!", 15, 1, 255, 255, 255]
       @args.outputs.labels << [640, 399, "Let's up the difficulty shall we?", 15, 1, 255, 255, 255]
     elsif level == 3
-      @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0, 125]
+      @args.outputs.primitives << [0, 0, 1280, 720, 0, 0, 0, 125].solid
       @args.outputs.solids << [70, 70, 1140, 510, 0, 0, 0, 200]
       @args.outputs.labels << [640, 459, "Oooo you think your hot stuff huh?", 15, 1, 255, 255, 255]
       @args.outputs.labels << [640, 399, "Why not try the ULTIMATE CHALLENGE NEXT! >:]", 15, 1, 255, 255, 255]
@@ -119,12 +118,12 @@ class GameBoard
   end
 
   def draw_walls(x, y, width, height, color=[0,0,0])
-    @args.outputs.solids << [x, y, width, height, *color]
+    @args.outputs.primitives << [x, y, width, height, *color].solid
   end
 
   def game_over?
     @time = 0
-    @args.outputs.solids << [0, 0, 1280, 720, 0, 0, 0, 125]
+    @args.outputs.primitives << [0, 0, 1280, 720, 0, 0, 0, 125].solid
     @args.outputs.labels << [640, 469, 'GAME OVER', 100, 1, 255, 255, 255] 
     @args.outputs.labels << [640, 250, 'Hit Spacebar to Restart and Try again!', 10, 1, 255, 255, 255] 
   end

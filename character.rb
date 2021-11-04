@@ -17,7 +17,7 @@ class Character
 
   # function that dipslays/draws the player character
   def draw
-    @args.outputs.sprites << [@player_x_position, @player_y_position, @player_w, @player_h, 'assets/astro-.png']
+    @args.outputs.primitives << {x: @player_x_position, y: @player_y_position, w: @player_w, h: @player_h, path: 'assets/astro-1.png'}.sprite!
   end
 
   # function that allows player to move
@@ -52,6 +52,8 @@ class Character
     colliding = false
     @walls.each do |wall|
       if @player_rect.intersect_rect?(wall)
+        set_x(wall)
+        #set_y(wall)
         colliding = true
         break
       end
@@ -59,25 +61,33 @@ class Character
     return colliding
   end
 
+  def set_x(wall)
+    if @player_rect[:x] + @player_rect[:w] > wall[:x] && @player_rect[:x] < wall[:x]
+      @player_x_position = wall[:x] - (@player_rect[:w] + 1)
+    else
+      @player_x_position = wall[:x] + 16
+    end
+  end
+
+  def set_y(wall)
+    #test
+  end
+
   # functions to set new x and y positions based on key press, keeps player within play area
   def left
-    @player_x_position -= 5 unless wall_collide || @player_x_position < 70
-    @player_x_position += 1 if wall_collide
+    @player_x_position -= 5 unless wall_collide || @player_x_position < 75
   end
 
   def up
     @player_y_position += 5 unless wall_collide || @player_y_position > 510
-    @player_y_position -= 1 if wall_collide
   end
 
   def right
-    @player_x_position += 5 unless wall_collide || @player_x_position > 1140
-    @player_x_position -= 1 if wall_collide
+    @player_x_position += 5 unless wall_collide || @player_x_position > 1155
   end
 
   def down
-    @player_y_position -= 5 unless wall_collide || @player_y_position < 70
-    @player_y_position += 1 if wall_collide
+    @player_y_position -= 5 unless wall_collide || @player_y_position < 75
   end
 
   # function that shuffles the players moves for the theme of game
